@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 import {
   Dropdown,
@@ -35,6 +36,18 @@ const UserCard = () => {
   const updateSettings = useSettings(s => s.update);
 
   const { isOpen: isLoginModalOpen, onOpen: openLoginModal, onOpenChange: onLoginModalOpenChange } = useDisclosure();
+
+  // 监听全局账号切换事件，用于 Electron 主进程触发登录模态框
+  useEffect(() => {
+    const handleSwitchAccount = () => {
+      openLoginModal();
+    };
+
+    window.addEventListener('switchAccount', handleSwitchAccount);
+    return () => {
+      window.removeEventListener('switchAccount', handleSwitchAccount);
+    };
+  }, [openLoginModal]);
 
   const {
     isOpen: isConfirmLogoutModalOpen,

@@ -107,6 +107,20 @@ function createTray({ getMainWindow, onExit }: Props) {
       },
     },
     {
+      label: "切换账号",
+      click: () => {
+        const win = getMainWindow?.();
+        if (!win) return;
+        try {
+          win.show();
+          win.focus();
+          win.webContents.send(channel.user.switchAccount);
+        } catch (err) {
+          log.error("[tray] switch account failed:", err);
+        }
+      },
+    },
+    {
       type: "separator",
     },
     {
