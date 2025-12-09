@@ -5,7 +5,6 @@ import { HeroUIProvider, ToastProvider } from "@heroui/react";
 import moment from "moment";
 
 import ConfirmModal from "./components/confirm-modal";
-
 import Theme from "./components/theme";
 import routes from "./routes";
 import { useAppUpdateStore } from "./store/app-update";
@@ -23,11 +22,10 @@ export function App() {
   const routeElement = useRoutes(routes);
   const navigate = useNavigate();
   const setUpdate = useAppUpdateStore(s => s.setUpdate);
-  const { user, clear } = useUser();
+  const { user } = useUser();
 
   // 账号切换确认提示框状态
   const [isSwitchAccountModalOpen, setIsSwitchAccountModalOpen] = useState(false);
-
 
   useEffect(() => {
     if (window.electron && window.electron.navigate) {
@@ -58,10 +56,10 @@ export function App() {
       const removeListener = window.electron.onSwitchAccount(() => {
         // 如果用户未登录，直接显示提示
         if (!user) {
-          import('@heroui/react').then(({ addToast }) => {
+          import("@heroui/react").then(({ addToast }) => {
             addToast({
-              title: '当前未登录',
-              color: 'warning',
+              title: "当前未登录",
+              color: "warning",
             });
           });
           return;
@@ -82,9 +80,9 @@ export function App() {
       // 显示主窗口
       window.electron.switchToMainWindow();
       // 触发全局账号切换事件，让 UserCard 组件显示登录模态框
-      window.dispatchEvent(new Event('switchAccount'));
+      window.dispatchEvent(new Event("switchAccount"));
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   };
@@ -101,7 +99,7 @@ export function App() {
     return () => {
       removeListener();
     };
-  }, []);
+  }, [setUpdate]);
 
   return (
     <HeroUIProvider navigate={navigate} useHref={useHref} locale="zh-CN">
@@ -112,7 +110,7 @@ export function App() {
         toastProps={{ timeout: 3000, color: "primary" }}
       />
       <Theme>{routeElement}</Theme>
-      
+
       {/* 账号切换确认提示框 */}
       <ConfirmModal
         type="danger"

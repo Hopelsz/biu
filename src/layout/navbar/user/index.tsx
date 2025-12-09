@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 import {
   Dropdown,
@@ -43,9 +43,9 @@ const UserCard = () => {
       openLoginModal();
     };
 
-    window.addEventListener('switchAccount', handleSwitchAccount);
+    window.addEventListener("switchAccount", handleSwitchAccount);
     return () => {
-      window.removeEventListener('switchAccount', handleSwitchAccount);
+      window.removeEventListener("switchAccount", handleSwitchAccount);
     };
   }, [openLoginModal]);
 

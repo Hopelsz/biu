@@ -189,7 +189,6 @@ const api: ElectronAPI = {
     ipcRenderer.on(channel.user.switchAccount, handler);
     return () => ipcRenderer.removeListener(channel.user.switchAccount, handler);
   },
-
 };
 
 contextBridge.exposeInMainWorld("electron", api);
