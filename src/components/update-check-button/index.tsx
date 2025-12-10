@@ -40,7 +40,9 @@ const UpdateCheckButton = () => {
 
   return (
     <>
-      <AsyncButton onPress={checkUpdate}>{isUpdateAvailable ? "查看更新内容" : "检查更新"}</AsyncButton>
+      <AsyncButton color="primary" onPress={checkUpdate}>
+        {isUpdateAvailable ? "查看更新内容" : "检查更新"}
+      </AsyncButton>
       <ReleaseNoteModal isOpen={isReleaseNoteModalOpen} onOpenChange={onReleaseNoteModalOpenChange} />
     </>
   );
