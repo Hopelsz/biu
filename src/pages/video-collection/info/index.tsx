@@ -73,7 +73,7 @@ const Info = ({
   }
 
   return (
-    <div className="mb-6 flex space-x-4">
+    <div className="flex space-x-4">
       <Image
         isBlurred
         radius="md"

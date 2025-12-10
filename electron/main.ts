@@ -68,11 +68,11 @@ function createWindow() {
 
   const indexPath = path.resolve(__dirname, "../dist/web/index.html");
   mainWindow.loadFile(indexPath);
-  if (isDev) {
-    mainWindow.webContents.openDevTools({
-      mode: "bottom",
-    });
-  }
+  // if (isDev) {
+  //   mainWindow.webContents.openDevTools({
+  //     mode: "bottom",
+  //   });
+  // }
 
   // 初始化 Windows 任务栏缩略按钮，并监听播放状态更新
   if (process.platform === "win32") {

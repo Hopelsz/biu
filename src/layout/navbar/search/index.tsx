@@ -68,7 +68,7 @@ const SearchInput: React.FC = () => {
           }
         }}
         onFocus={() => setOpen(true)}
-        placeholder="搜索"
+        placeholder="搜索视频、用户、番剧..."
         endContent={
           <div
             onClick={handleSearchClick}

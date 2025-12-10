@@ -8,6 +8,7 @@ import { CollectionType } from "@/common/constants/collection";
 import { formatDuration } from "@/common/utils";
 import GridList from "@/components/grid-list";
 import MediaItem from "@/components/media-item";
+import SearchInput from "@/components/search-input";
 import { getFavResourceList, type FavMedia } from "@/service/fav-resource";
 import { usePlayList } from "@/store/play-list";
 import { useSettings } from "@/store/settings";
@@ -70,6 +71,10 @@ const Favorites: React.FC = () => {
   const play = usePlayList(state => state.play);
   const playList = usePlayList(state => state.playList);
   const addToPlayList = usePlayList(state => state.addList);
+
+  // 搜索功能
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filteredList, setFilteredList] = useState<FavMedia[]>([]);
 
   const {
     data,
@@ -180,6 +185,27 @@ const Favorites: React.FC = () => {
   // 根据当前模式获取显示数据
   const currentData = displayMode === "list" ? listModeData : data;
   const currentLoading = displayMode === "list" ? listModeLoading : loading;
+
+  // 过滤媒体列表
+  useEffect(() => {
+    const medias = displayMode === "list" ? listModeData.list : (data?.list ?? []);
+
+    if (searchKeyword) {
+      const filtered = medias.filter(
+        item =>
+          (item.title && item.title.toLowerCase().includes(searchKeyword.toLowerCase())) ||
+          (item.upper?.name && item.upper.name.toLowerCase().includes(searchKeyword.toLowerCase())),
+      );
+      setFilteredList(filtered);
+    } else {
+      setFilteredList(medias);
+    }
+  }, [searchKeyword, displayMode, listModeData.list, data?.list]);
+
+  // 处理搜索
+  const handleSearch = useCallback((keyword: string) => {
+    setSearchKeyword(keyword);
+  }, []);
 
   // 刷新当前模式的数据
   const handleRefresh = useCallback(() => {
@@ -302,24 +328,31 @@ const Favorites: React.FC = () => {
 
   return (
     <>
-      <Info
-        loading={currentLoading}
-        type={CollectionType.Favorite}
-        cover={currentData?.info?.cover}
-        attr={currentData?.info?.attr}
-        title={currentData?.info?.title}
-        desc={currentData?.info?.intro}
-        upMid={currentData?.info?.upper?.mid}
-        upName={currentData?.info?.upper?.name}
-        mediaCount={currentData?.info?.media_count}
-        afterChangeInfo={handleRefresh}
-        onPlayAll={onPlayAll}
-        onAddToPlayList={addAllMedia}
-      />
+      <div className="mb-6 flex items-start justify-between">
+        <div className="flex-shrink-0">
+          <Info
+            loading={currentLoading}
+            type={CollectionType.Favorite}
+            cover={currentData?.info?.cover}
+            attr={currentData?.info?.attr}
+            title={currentData?.info?.title}
+            desc={currentData?.info?.intro}
+            upMid={currentData?.info?.upper?.mid}
+            upName={currentData?.info?.upper?.name}
+            mediaCount={currentData?.info?.media_count}
+            afterChangeInfo={handleRefresh}
+            onPlayAll={onPlayAll}
+            onAddToPlayList={addAllMedia}
+          />
+        </div>
+        <div className="ml-4 flex h-[230px] flex-col justify-end">
+          <SearchInput placeholder="搜索收藏中的视频..." onSearch={handleSearch} debounceDelay={300} maxWidth={350} />
+        </div>
+      </div>
       {displayMode === "card" ? (
         <>
-          <GridList data={data?.list ?? []} loading={loading} itemKey="id" renderItem={renderMediaItem} />
-          {pagination.totalPage > 1 && (
+          <GridList data={filteredList} loading={loading} itemKey="id" renderItem={renderMediaItem} />
+          {pagination.totalPage > 1 && !searchKeyword && (
             <div className="flex w-full items-center justify-center py-6">
               <Pagination
                 initialPage={1}
@@ -332,11 +365,15 @@ const Favorites: React.FC = () => {
         </>
       ) : (
         <div className="space-y-2">
-          {(listModeData?.list ?? []).map(renderMediaItem)}
-          <div ref={loadMoreRef} className="h-10" />
-          {listModeLoading && <div className="text-foreground-500 py-2 text-center text-sm">加载中...</div>}
-          {!listModeHasMore && !listModeLoading && (
-            <div className="text-foreground-500 py-2 text-center text-sm">没有更多了</div>
+          {filteredList.map(renderMediaItem)}
+          {!searchKeyword && (
+            <>
+              <div ref={loadMoreRef} className="h-10" />
+              {listModeLoading && <div className="text-foreground-500 py-2 text-center text-sm">加载中...</div>}
+              {!listModeHasMore && !listModeLoading && (
+                <div className="text-foreground-500 py-2 text-center text-sm">没有更多了</div>
+              )}
+            </>
           )}
         </div>
       )}
