@@ -4,6 +4,7 @@ import {
   addToast,
   Button,
   Checkbox,
+  Divider,
   Modal,
   ModalBody,
   ModalContent,
@@ -121,6 +122,7 @@ const FavFolderSelect = ({ rid, isOpen, onOpenChange, title, afterSubmit }: FavF
     >
       <ModalContent>
         <ModalHeader className="text-base font-medium">{title}</ModalHeader>
+        <Divider />
         <ModalBody className="h-[800px] max-h-[800px] px-0">
           {loading ? (
             <div className="flex h-[400px] items-center justify-center">

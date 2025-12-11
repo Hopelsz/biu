@@ -62,6 +62,8 @@ export interface FavFolderItem {
   attr: number;
   /** 收藏夹标题 */
   title: string;
+  /** 收藏夹封面图片 url */
+  cover: string;
   /** 目标 id 是否存在于该收藏夹（存在：1，不存在：0） */
   fav_state: number;
   /** 收藏夹内容数量 */

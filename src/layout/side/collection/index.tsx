@@ -36,6 +36,7 @@ const Collection = () => {
             .map(item => ({
               title: item.title,
               href: `/collection/${item.id}?mid=${item?.mid}`,
+              cover: item.cover,
               icon: RiFolderLine,
               activeIcon: RiFolderOpenLine,
             }))}

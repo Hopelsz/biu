@@ -36,7 +36,7 @@ interface FavFolderCreatedListData {
   has_more: boolean;
 }
 
-interface List {
+export interface List {
   id: number;
   fid: number;
   mid: number;
@@ -62,7 +62,7 @@ interface List {
   bvid: string;
 }
 
-interface Upper {
+export interface Upper {
   mid: number;
   name: string;
   face: string;

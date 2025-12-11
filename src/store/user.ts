@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import { getFavFolderCollectedList, type FavFolderCollectedItem } from "@/service/fav-folder-collected-list";
-import { getFavFolderCreatedListAll, type FavFolderItem } from "@/service/fav-folder-created-list-all";
+import { getFavFolderCreatedList, type List as FavFolderItem } from "@/service/fav-folder-created-list";
 import { getUserInfo, type UserInfo } from "@/service/user-info";
 
 interface UserState {
@@ -37,8 +37,10 @@ export const useUser = create<UserState & Action>()(
           set(() => ({ user: res.data }));
 
           const result = await Promise.allSettled([
-            getFavFolderCreatedListAll({
+            getFavFolderCreatedList({
               up_mid: res.data?.mid ?? 0,
+              ps: 50,
+              pn: 1,
             }),
             getFavFolderCollectedList({
               up_mid: res.data?.mid ?? 0,
@@ -72,8 +74,10 @@ export const useUser = create<UserState & Action>()(
           return;
         }
 
-        const res = await getFavFolderCreatedListAll({
+        const res = await getFavFolderCreatedList({
           up_mid: user.mid,
+          ps: 50,
+          pn: 1,
         });
 
         if (res.code === 0) {
