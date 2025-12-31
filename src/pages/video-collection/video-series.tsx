@@ -206,7 +206,7 @@ const VideoSeries = () => {
             ]}
             onKeywordChange={keyword => setSearchParams(prev => ({ ...prev, keyword }))}
             onOrderChange={order => setSearchParams(prev => ({ ...prev, order }))}
-            containerClassName="mb-6 flex flex-wrap items-center gap-4"
+            containerClassName="flex flex-wrap items-center gap-4 justify-between"
           />
         </div>
       </div>
