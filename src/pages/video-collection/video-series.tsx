@@ -192,7 +192,7 @@ const VideoSeries = () => {
         />
 
         {/* 搜索和过滤区域 */}
-        <div className="absolute right-4 bottom-0">
+        <div className="absolute right-4 bottom-6">
           <SearchFilter
             keyword={searchParams.keyword}
             order={searchParams.order}
