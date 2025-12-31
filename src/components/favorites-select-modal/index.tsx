@@ -126,7 +126,7 @@ const FavoritesSelectModal = () => {
       size="md"
     >
       <ModalContent>
-        <ModalHeader className="border-b-1 border-b-zinc-200 text-base font-medium dark:border-b-zinc-800">
+        <ModalHeader className="border-b border-b-zinc-200 text-base font-medium dark:border-b-zinc-800">
           {title}
         </ModalHeader>
         <ModalBody className="h-[800px] max-h-[800px] px-0">
