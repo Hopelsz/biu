@@ -2,10 +2,11 @@ import React, { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import { Chip, Input, Listbox, ListboxItem } from "@heroui/react";
-import { RiSearchLine } from "@remixicon/react";
+import { RiCloseLine, RiSearchLine } from "@remixicon/react";
 import { useRequest, useClickAway } from "ahooks";
 import classNames from "classnames";
 
+import IconButton from "@/components/icon-button";
 import { getSearchSuggestMain } from "@/service/main-suggest";
 import { useSearchHistory } from "@/store/search-history";
 import { useSettings } from "@/store/settings";
@@ -74,49 +75,13 @@ const SearchInput: React.FC = () => {
         endContent={
           <div className="flex items-center gap-1">
             {value && (
-              <div
-                onClick={() => setValue("")}
-                className="bg-content2 hover:bg-content3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md transition-colors"
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setValue("");
-                  }
-                }}
-                aria-label="清除搜索"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </div>
+              <IconButton onClick={() => setValue("")} ariaLabel="清除搜索">
+                <RiCloseLine size={16} />
+              </IconButton>
             )}
-            <div
-              onClick={handleSearchClick}
-              className="bg-content2 hover:bg-content3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md transition-colors"
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  handleSearchClick();
-                }
-              }}
-              aria-label="搜索"
-            >
+            <IconButton onClick={handleSearchClick} ariaLabel="搜索">
               <RiSearchLine size={16} />
-            </div>
+            </IconButton>
           </div>
         }
         className="window-no-drag w-full"
