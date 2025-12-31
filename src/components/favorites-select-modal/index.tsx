@@ -124,6 +124,7 @@ const FavoritesSelectModal = () => {
       onOpenChange={onFavSelectModalOpenChange}
       isDismissable={false}
       size="md"
+      backdrop="blur"
     >
       <ModalContent>
         <ModalHeader className="border-b border-b-zinc-200 text-base font-medium dark:border-b-zinc-800">
