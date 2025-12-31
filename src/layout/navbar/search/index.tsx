@@ -72,20 +72,51 @@ const SearchInput: React.FC = () => {
         onFocus={() => setOpen(true)}
         placeholder="搜索"
         endContent={
-          <div
-            onClick={handleSearchClick}
-            className="bg-content2 hover:bg-content3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md transition-colors"
-            role="button"
-            tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleSearchClick();
-              }
-            }}
-            aria-label="搜索"
-          >
-            <RiSearchLine size={16} />
+          <div className="flex items-center gap-1">
+            {value && (
+              <div
+                onClick={() => setValue("")}
+                className="bg-content2 hover:bg-content3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md transition-colors"
+                role="button"
+                tabIndex={0}
+                onKeyDown={e => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setValue("");
+                  }
+                }}
+                aria-label="清除搜索"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </div>
+            )}
+            <div
+              onClick={handleSearchClick}
+              className="bg-content2 hover:bg-content3 flex h-6 w-6 cursor-pointer items-center justify-center rounded-md transition-colors"
+              role="button"
+              tabIndex={0}
+              onKeyDown={e => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleSearchClick();
+                }
+              }}
+              aria-label="搜索"
+            >
+              <RiSearchLine size={16} />
+            </div>
           </div>
         }
         className="window-no-drag w-full"

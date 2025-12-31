@@ -126,7 +126,9 @@ const FavoritesSelectModal = () => {
       size="md"
     >
       <ModalContent>
-        <ModalHeader className="text-base font-medium">{title}</ModalHeader>
+        <ModalHeader className="border-b-1 border-b-zinc-200 text-base font-medium dark:border-b-zinc-800">
+          {title}
+        </ModalHeader>
         <ModalBody className="h-[800px] max-h-[800px] px-0">
           {loading ? (
             <div className="flex h-[400px] items-center justify-center">
